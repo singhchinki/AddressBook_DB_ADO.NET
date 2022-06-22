@@ -74,5 +74,20 @@ namespace AddressBookUsingAdoNet
                 Console.WriteLine("---------------------------\nError:Records are not updated.\n------------------------------");
             }
         }
+        public void DeleteRecord()
+        {
+            SqlConnection connect = new SqlConnection(connectionString);
+            using (connect)
+            {
+                connect.Open();
+                Console.WriteLine("Enter name of person to  delete from records:");
+                string name = Console.ReadLine();
+                string query = "delete from AddressBook where First_Name='" + name + "'";
+                SqlCommand command = new SqlCommand(query, connect);
+                command.ExecuteNonQuery();
+                connect.Close();
+            }
+
+        }
     }
 }
