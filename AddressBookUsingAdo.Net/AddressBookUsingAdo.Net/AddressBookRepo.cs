@@ -50,5 +50,29 @@ namespace AddressBookUsingAdoNet
                 connect.Close();
             }
         }
+        //UC2 Update record in database
+        public void UpdateRecord()
+        {
+            SqlConnection connect = new SqlConnection(connectionString);
+            try
+            {
+                using (connect)
+                {
+                    Console.WriteLine("Enter name of Person:");
+                    string name = Console.ReadLine();
+                    Console.WriteLine("Enter contact to update:");
+                    string phone = Console.ReadLine();
+                    connect.Open();
+                    string query = "update AddressBook set Phone_Number =" + phone + "where First_Name='" + name + "'";
+                    SqlCommand command = new SqlCommand(query, connect);
+                    command.ExecuteNonQuery();
+                    Console.WriteLine("Records updated successfully.");
+                }
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("---------------------------\nError:Records are not updated.\n------------------------------");
+            }
+        }
     }
 }
