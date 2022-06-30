@@ -87,7 +87,59 @@ namespace AddressBookUsingAdoNet
                 command.ExecuteNonQuery();
                 connect.Close();
             }
-
         }
+            public void AddData(Book model)
+            {
+                SqlConnection connection = new SqlConnection(connectionString);
+                lock (this)
+                {
+                    using (connection)
+                    {
+                        try
+                        {
+                            SqlCommand command = new SqlCommand("spAddress_Book", connection);
+                            command.CommandType = CommandType.StoredProcedure;
+                            command.Parameters.AddWithValue("@FIRST_NAME", model.FName);
+                            command.Parameters.AddWithValue("@LAST_NAME", model.LName);
+                            command.Parameters.AddWithValue("@ADDRESS", model.Address);
+                            command.Parameters.AddWithValue("@CITY", model.City);
+                            command.Parameters.AddWithValue("@STATE", model.State);
+                            command.Parameters.AddWithValue("@ZIP_CODE", model.Zip);
+                            command.Parameters.AddWithValue("@PHONE_NUMBER", model.Phone);
+                            command.Parameters.AddWithValue("@EMAIL", model.Email);
+                            connection.Open();
+                            var result = command.ExecuteNonQuery();
+                            connection.Close();
+                            Console.WriteLine("Data Added Successfully");
+                        }
+                        catch (Exception ex)
+                        {
+                            throw new Exception(ex.Message);
+                        }
+                        finally
+                        {
+                            connection.Close();
+                        }
+                    }
+                }
+            }
+
+            public void AddMultipleContacts(List<Book> bookList)
+            {
+                bookList.ForEach(details =>
+                {
+                    Thread thread = new Thread(() =>
+                    {
+                        Console.WriteLine("Thread Start Time: " + DateTime.Now);
+                        this.AddData(details);
+                        Console.WriteLine("Contact Added: " + details.FName);
+                        Console.WriteLine("Thread End Time: " + DateTime.Now);
+                    });
+                    thread.Start();
+                });
+            }
     }
+
 }
+    
+

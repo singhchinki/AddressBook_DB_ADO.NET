@@ -14,6 +14,7 @@ Email varchar(20) not null,
 PRIMARY KEY ("PersonID")
 );
 select * from AddressBook
+-------------------------------insert value------------one by one----------------------
 insert into AddressBook (PersonID,First_Name,Last_Name,Address,City,State,Zip,Phone_Number,Email) 
 values('SurajDal','Suraj','Dal','Rajgad','Pune','Maharashtra','412213','9876543210','surajdal@gmail.com');
 insert into AddressBook (PersonID,First_Name,Last_Name,Address,City,State,Zip,Phone_Number,Email) 
@@ -89,7 +90,7 @@ Zip int not null,
 Email varchar(50) not null
 );
 
-insert into Person_Address values('Suraj','Dal','Pune','Maharashtra','411213','surajdal@gmail.com');
+insert into Person_Address values('surya','singh','Pune','Maharashtra','411213','surajdal@gmail.com');
 insert into Person_Address values('Sanket','Dal','Pune','Maharashtra','411213','sanketdal@gmail.com');
 insert into Person_Address values('Mayuresh','D','Nashik','Maharashtra','423003','mayureshd@gmail.com');
 insert into Person_Address values('Aditya','T','Mumbai','Maharashtra','400001','adityat@gmail.com');
